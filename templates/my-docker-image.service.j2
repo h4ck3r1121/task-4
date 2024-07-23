@@ -1,0 +1,11 @@
+[Unit]
+Description=My docker image; Final work; Task 4
+Requires=docker.service
+
+[Service]
+User=root
+ExecStart=/bin/sh -c "docker run -p 8080:8080 {{ docker_image }}"
+
+[Install]
+WantedBy=multi-user.target
+

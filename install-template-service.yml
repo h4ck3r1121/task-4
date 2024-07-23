@@ -1,0 +1,35 @@
+---
+- hosts: servers
+
+# передаем в переменную "my-tag" значение переменной "$MY_CI_COMMIT_SHORT_SHA" через extra-vars
+
+  vars:
+    docker_image: h4ck3r1121/skillbox-app:{{ my_tag }}
+
+
+  tasks:
+
+    - name: "Install my docker image"
+      shell: sudo docker pull {{ docker_image }}
+
+
+    - name: "Copy 'my docker image' service"
+      template:
+        src: my-docker-image.service.j2
+        dest: /usr/lib/systemd/system/my-docker-image.service
+        owner: root
+        mode: 644
+
+
+    - name: "Restart services"
+      systemd_service:
+        daemon_reload: true
+
+
+    - name: "Start 'my docker image' service"
+      systemd_service:
+        name: my-docker-image.service
+        state: started
+#        enabled: true
+#
+# также сервис можно добавить в автозагрузку, раскомментировав нужную строку
