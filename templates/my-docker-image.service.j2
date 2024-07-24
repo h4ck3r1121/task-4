@@ -4,8 +4,7 @@ Requires=docker.service
 
 [Service]
 User=root
-ExecStart=/bin/sh -c "docker run -p 8080:8080 {{ docker_image }}"
+ExecStart=/bin/sh -c "docker run -d -p 8080:8080 {{ docker_image }}"
 
 [Install]
 WantedBy=multi-user.target
-
